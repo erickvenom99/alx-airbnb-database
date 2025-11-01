@@ -28,6 +28,7 @@ CREATE TABLE Property (
   FOREIGN KEY (host_id) REFERENCES "User"(user_id) ON DELETE CASCADE
 );
 
+CREATE INDEX idx_property_host_id ON Property(host_id);
 
 -- Booking Table
 CREATE TABLE Booking (
@@ -43,7 +44,8 @@ CREATE TABLE Booking (
   FOREIGN KEY (user_id) REFERENCES "User"(user_id) ON DELETE CASCADE
 );
 
-
+CREATE INDEX idx_bookings_property_id ON Booking(property_id);
+CREATE INDEX idx_bookings_user_id ON Booking(user_id);
 
 -- Payment Table
 CREATE TABLE Payment (
@@ -69,7 +71,8 @@ CREATE TABLE Reviews (
   FOREIGN KEY (user_id) REFERENCES "User"(user_id) ON DELETE CASCADE
 );
 
-
+CREATE INDEX idx_reviews_property_id ON Reviews(property_id);
+CREATE INDEX idx_reviews_user_id ON Reviews(user_id);
 
 -- Message Table
 CREATE TABLE Message (
@@ -81,5 +84,8 @@ CREATE TABLE Message (
   FOREIGN KEY (sender_id) REFERENCES "User"(user_id) ON DELETE CASCADE,
   FOREIGN KEY (recipient_id) REFERENCES "User"(user_id) ON DELETE CASCADE
 );
+
+CREATE INDEX idx_messages_sender_id ON Message(sender_id);
+CREATE INDEX idx_messages_recipient_id ON Message(recipient_id);
 
 
