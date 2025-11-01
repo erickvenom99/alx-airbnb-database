@@ -1,11 +1,25 @@
 SELECT
     p.property_id,
     p.name AS property_name,
-    AVG(r.rating) AS avg_rating
-FROM Property p
-LEFT JOIN Reviews r ON p.property_id = r.property_id
-GROUP BY p.property_id, p.name
-HAVING AVG(r.rating) > 4.0;
+    p.location,
+    p.price_per_night,
+    subquery.avg_rating
+FROM
+    Property p
+JOIN (
+    SELECT
+        property_id,
+        AVG(rating) AS avg_rating
+    FROM
+        Reviews
+    GROUP BY
+        property_id
+    HAVING
+        AVG(rating) > 4.0
+) AS subquery ON p.property_id = subquery.property_id
+ORDER BY
+    subquery.avg_rating DESC;
+
 
 
 
